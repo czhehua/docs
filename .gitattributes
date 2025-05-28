@@ -1,0 +1,142 @@
+* text=auto eol=lf
+
+# ============= 二进制文件（强制原样存储，禁止修改） =============
+# ---- 可执行文件与库 ----
+*.exe        binary
+*.dll        binary
+*.so         binary
+*.a          binary
+*.lib        binary
+*.jar        binary
+*.bin        binary
+
+# ---- 多媒体与图像 ----
+*.png        binary
+*.jpg        binary
+*.jpeg       binary
+*.gif        binary
+*.svg        binary
+*.ico        binary
+*.bmp        binary
+*.mp3        binary
+*.mp4        binary
+*.mov        binary
+*.wav        binary
+*.webm       binary
+
+# ---- 文档与压缩包 ----
+*.pdf        binary
+*.docx       binary
+*.xlsx       binary
+*.pptx       binary
+*.zip        binary
+*.tar        binary
+*.gz         binary
+*.7z         binary
+*.rar        binary
+
+# ---- 开发相关二进制文件 ----
+
+# Python 字节码
+*.pyc        binary
+
+# Java 字节码
+*.class      binary
+
+# 编译对象文件
+*.o          binary
+
+# 编译输出
+*.out        binary
+
+# ---- 数据库与证书 ----
+*.db         binary
+*.sqlite     binary
+*.pem        binary
+*.cer        binary
+*.key        binary
+*.pfx        binary
+
+# ---- 字体与设计文件 ----
+*.ttf        binary
+*.otf        binary
+*.woff       binary
+*.woff2      binary
+*.sketch     binary
+
+# Adobe Photoshop
+*.psd        binary
+
+# Adobe Illustrator
+*.ai         binary
+
+# ---- 虚拟机与容器 ----
+*.vmdk       binary
+*.qcow2      binary
+*.ova        binary
+
+# Docker 导出文件
+*.docker     binary
+
+# ---- 其他二进制文件 ----
+
+# 游戏/应用数据文件
+*.data       binary
+
+# Unity 资源
+*.asset      binary
+
+# 游戏资源包
+*.pack       binary
+
+# ============= 文本文件（保留 Git 的换行符和差异比较） =============
+# ---- 源代码 ----
+*.c          text
+*.cpp        text
+*.h          text
+*.java       text
+*.py         text
+*.go         text
+*.rs         text
+*.sh         text
+*.php        text
+*.html       text
+*.css        text
+*.js         text
+*.ts         text
+
+# ---- 配置文件 ----
+*.json       text
+*.yaml       text
+*.yml        text
+*.xml        text
+*.toml       text
+*.ini        text
+*.conf       text
+
+# ---- 文档与脚本 ----
+*.md         text
+*.txt        text
+*.log        text
+
+# Windows 批处理文件
+*.bat        text eol=crlf
+
+# PowerShell 脚本
+*.ps1        text eol=crlf
+
+
+# ============= 特殊处理 =============
+# ---- 强制 Unix 换行符（LF） ----
+*.sh         text eol=lf
+*.py         text eol=lf
+*.yml        text eol=lf
+
+# ---- 强制 Windows 换行符（CRLF） ----
+*.bat        text eol=crlf
+*.cmd        text eol=crlf
+
+# ---- 禁止换行符转换（纯文本但保持原样） ----
+
+# Windows 注册表文件（UTF-16LE 需原样存储）
+*.reg        binary
