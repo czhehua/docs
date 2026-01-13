@@ -56,7 +56,7 @@ qemu-system-x86_64 \
     -nographic
 EOF
 
-chmod + x start.sh
+chmod +x start.sh
 ```
 
 Start the qemu machine with the shell, using `sudo` in order to use KVM:
