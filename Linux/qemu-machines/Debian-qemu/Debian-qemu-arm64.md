@@ -62,6 +62,8 @@ EOF
 chmod +x start.sh
 ```
 
+## 3. Start the qemu machine
+
 Start the qemu machine with the shell:
 ```bash
 ./start.sh
@@ -85,5 +87,27 @@ vda     254:0    0   20G  0 disk
 ```
 
 Note: qmeu machine can connected via port 2222 after openssh-server is configured.
+
+## 4. Boot with GUI
+
+In case GUI has been installed, change `start.sh` like following.
+
+```bash
+qemu-system-aarch64 \
+  -m 2G \
+  -cpu cortex-a72 \
+  -smp 2 \
+  -M virt \
+  -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
+  -drive if=none,file=debian-12-nocloud-arm64.qcow2,id=hd0 \
+  -device virtio-blk-device,drive=hd0 \
+  -netdev user,id=net0,hostfwd=tcp::2223-:22 \
+  -device virtio-net-device,netdev=net0 \
+  -device virtio-gpu-pci -display gtk,gl=on \
+  -device usb-ehci,id=ehci \
+  -device usb-kbd \
+  -device usb-tablet \
+  -serial mon:stdio
+```
 
 (END)

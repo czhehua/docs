@@ -59,6 +59,8 @@ EOF
 chmod +x start.sh
 ```
 
+## 3. Start the qemu machine
+
 Start the qemu machine with the shell, using `sudo` in order to use KVM:
 ```bash
 sudo ./start.sh
