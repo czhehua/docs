@@ -8,6 +8,7 @@
 ### 1.1. Linux
 
 - [Debian/Ubuntu 服务器与桌面环境配置](Linux/Debian_Ubuntu_DevEnv.md)
+- [Debian/Ubuntu initramfs 加载模块优化](Linux/Debian_Ubuntu_initramfs.md)
 - [Ubuntu 使用 Btrfs 安装并配置子卷](Linux/Ubuntu_Btrfs_SubVolume.md)
 - [Ubuntu 替换 Snap 版 Firefox](Linux/Ubuntu_NoSnap_Firefox.md)
 - [WSL 使用入门](Linux/WSL_QuickStart.md)
