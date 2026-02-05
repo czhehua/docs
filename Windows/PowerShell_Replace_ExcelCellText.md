@@ -1,6 +1,11 @@
 # 使用 PowerShell 修改 Excel 单元格内容
 
-使用 PowerShell 修改单元格可以通过调用 Excel COM 来实现。需要系统中预先安装好 Excel 程序。
+使用 PowerShell 修改单元格可以通过调用 Excel COM 来实现。
+- 支持 .xls、.xlsx、.xlsm、.xlsb 等格式。
+
+**注意：**
+
+需要系统中预先安装好 Excel 程序。
 
 ## 示例脚本函数：
 
@@ -19,8 +24,10 @@ function Replace-ExcelCellText {
 
     # 创建 Excel COM 对象（只创建一次）
     $excel = New-Object -ComObject Excel.Application
-    $excel.Visible = $false
-    $excel.DisplayAlerts = $false
+    $excel.Visible = $false   # 不显示 Excel 窗口
+    $excel.DisplayAlerts = $false   # 禁止 Excel 弹出任何确认 / 警告对话框
+    $excel.AskToUpdateLinks = $false   # 禁止询问是否更新外部链接
+    $excel.Calculation = -4135   # 手动计算 xlCalculationManual
 
     try {
         Write-Host "[Note] Excel files modification will take a few seconds. Please wait..." -ForegroundColor Yellow
@@ -102,9 +109,10 @@ Replace-ExcelCellText -ExcelPath "./Resource.xlsx" -OldText "1000" -NewText "110
 
 ```powershell
 $ExcelFiles = @(
-    "./Glossary1.xlsx"
-    "./Glossary2.xlsx"
-    "./Glossary3.xlsx"
+    "./Glossary.xls"
+    "./Glossary.xlsx"
+    "./Glossary.xlsm"
+    "./Glossary.xlsb"
 )
 # 将文件名数组指定给 -ExcelPath 参数
 Replace-ExcelCellText -ExcelPath $ExcelFiles -OldText "7.0.0.0" -NewText "8.0.0.0"
