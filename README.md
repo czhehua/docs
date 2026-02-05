@@ -1,7 +1,7 @@
 # 知识点整理
 
-**Revision:**  0.12  
-**最后更新:** 2026/01/13
+**Revision:**  0.15  
+**最后更新:** 2026/02/05
 
 ## 1. PC
 
@@ -26,6 +26,8 @@
 - [Windows注册表: 右键菜单增加从命令提示符等打开](Windows/OpenCmdHere_ShellExt.md)
 - [Windows注册表: VSCode便携版添加右键菜单](Windows/VSCode_Portable_ShellExt.md)
 - [Windows注册表: BeyondCompare4便携版添加右键菜单](Windows/Beyond_Compare_4_ShellExt.md)
+- [使用 PowerShell 替换文本](Windows/PowerShell_Replace_TextFileText.md)
+- [使用 PowerShell 修改 Excel 单元格内容](Windows/PowerShell_Replace_ExcelCellText.md)
 
 ## 2. 打印机
 
