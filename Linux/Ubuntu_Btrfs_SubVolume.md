@@ -1,40 +1,47 @@
 # 主题：Ubuntu 使用 Btrfs 安装并配置子卷
 
-**Revision:** 1.0  
-**最后更新:** 2025/05/27
+**Revision:** 2.0  
+**最后更新:** 2026/11/09
 
 - [主题：Ubuntu 使用 Btrfs 安装并配置子卷](#主题ubuntu-使用-btrfs-安装并配置子卷)
 	- [1. 需求](#1-需求)
-	- [2. 安装和配置步骤](#2-安装和配置步骤)
-		- [2.1. 安装时选择文件系统为 Btrfs](#21-安装时选择文件系统为-btrfs)
-		- [2.2. 创建并转换 Btrfs 子卷](#22-创建并转换-btrfs-子卷)
-		- [2.2.1. 关闭 swap](#221-关闭-swap)
-		- [2.2.2. 创建 Btrfs 子卷](#222-创建-btrfs-子卷)
-		- [2.2.3. 编辑  fstab](#223-编辑--fstab)
-		- [2.2.4. 编辑并更新 grub 配置](#224-编辑并更新-grub-配置)
-		- [2.2.5. 确认 Btrfs 子卷已正确挂载](#225-确认-btrfs-子卷已正确挂载)
-		- [2.2.6. 清理迁移前的文件系统](#226-清理迁移前的文件系统)
-		- [2.2.7. 重新创建 swap 文件](#227-重新创建-swap-文件)
-- [2.3. 对 Btrfs 卷中已有文件进行压缩](#23-对-btrfs-卷中已有文件进行压缩)
-- [3. 安装 Snapper 用于管理快照](#3-安装-snapper-用于管理快照)
-	- [3.1. 安装 Snapper](#31-安装-snapper)
-	- [3.2. 查看 snapshot 列表](#32-查看-snapshot-列表)
-	- [3.3. 手动创建备份](#33-手动创建备份)
-	- [3.4. 手动删除备份](#34-手动删除备份)
-	- [3.5. 禁用开机备份](#35-禁用开机备份)
+	- [2. 安装与配置步骤（新）](#2-安装与配置步骤新)
+	- [3. 安装和配置步骤（旧）](#3-安装和配置步骤旧)
+		- [3.1. 安装时选择文件系统为 Btrfs](#31-安装时选择文件系统为-btrfs)
+		- [3.2. 创建并转换 Btrfs 子卷](#32-创建并转换-btrfs-子卷)
+			- [3.2.1. 关闭 swap](#321-关闭-swap)
+			- [3.2.3. 创建 Btrfs 子卷](#323-创建-btrfs-子卷)
+			- [3.2.4. 编辑  fstab](#324-编辑--fstab)
+			- [3.2.4. 编辑并更新 grub 配置](#324-编辑并更新-grub-配置)
+			- [3.2.5. 确认 Btrfs 子卷已正确挂载](#325-确认-btrfs-子卷已正确挂载)
+			- [3.2.6. 清理迁移前的文件系统](#326-清理迁移前的文件系统)
+			- [3.2.7. 重新创建 swap 文件](#327-重新创建-swap-文件)
+		- [3.3. 对 Btrfs 卷中已有文件进行压缩](#33-对-btrfs-卷中已有文件进行压缩)
+		- [3.4. 安装 Snapper 用于管理快照](#34-安装-snapper-用于管理快照)
+			- [3.4.1. 安装 Snapper](#341-安装-snapper)
+			- [3.4.3. 查看 snapshot 列表](#343-查看-snapshot-列表)
+			- [3.4.4. 手动创建备份](#344-手动创建备份)
+			- [3.4.4. 手动删除备份](#344-手动删除备份)
+			- [3.4.5. 禁用开机备份](#345-禁用开机备份)
 
 
 ## 1. 需求 
 
 Btrfs 是一个相对较新的文件系统，通常发音为 b-tree FS 或 butter FS，它提供了许多先进的功能，如CoW（写时文件复制）、快照、压缩、校验和等。
 
-本文主要参照如下网页，将介绍使用 Btrfs 安装 Ubuntu 系统时，需要注意的一些细节。
+## 2. 安装与配置步骤（新） 
+
+参考 Github [ubuntu-btrfs-install](https://github.com/sirwobbythefirst/ubuntu-btrfs-install) 项目，安装后运行 `ubuntu-btrfs-install.sh` 脚本，可实现自动配置。
+
+
+## 3. 安装和配置步骤（旧）  
+
+注意：这里是旧版内容，仅供存档参考。请按新版本设置。
+
+本章节主要参照如下网页，将介绍使用 Btrfs 安装 Ubuntu 系统时，需要注意的一些细节。
 - [正确地将Ubuntu安装到Btrfs中](https://edgeneko.aiursoft.cn/2024/08/17/BtrfsWithUbuntuServer/)
 
-
-## 2. 安装和配置步骤  
-
-### 2.1. 安装时选择文件系统为 Btrfs
+### 3.1. 安装时选择文件系统为 Btrfs
 
 安装过程与普通安装流程类似，只需注意如下要点：
 - 根分区（/）的文件系统选择为 Btrfs 并格式化。
@@ -42,7 +49,7 @@ Btrfs 是一个相对较新的文件系统，通常发音为 b-tree FS 或 butte
 
 安装完后成，正常登录系统，并进行接下来的配置。
 
-### 2.2. 创建并转换 Btrfs 子卷
+### 3.2. 创建并转换 Btrfs 子卷
 
 Ubuntu 24.04 安装器不再使用子卷格式安装，而是将所有文件安装在根子卷中。
 - 不使用分卷管理将：无法单独对系统文件（或用户数据）进行快照等。
@@ -71,7 +78,7 @@ sudo Btrfs subvolume list /
 - 接下来的操作会对系统所在的 Btrfs 卷进行修改，请确认输入了正确的命令并谨慎操作。操作失误可能导致系统故障甚至数据丢失。重要数据建议先备份。
 - 操作要求您具有一定的 Linux 与 Btrfs 基础知识，如编辑 /etc/fstab、挂载或取消挂载卷、进行 grub-install 等操作。建议在开始前先完整阅读以下步骤，确保您理解每一步的含义。
 
-### 2.2.1. 关闭 swap
+#### 3.2.1. 关闭 swap
 
 如果 Btrfs 卷中存放了 swap 文件（例如：安装 Ubuntu Server 时会自动创建），需要先关闭并删除文件以便对根目录进行快照：
 
@@ -89,7 +96,7 @@ sudo nano /etc/fstab
 # /swap.img     none    swap    sw      0       0
 ```
 
-### 2.2.2. 创建 Btrfs 子卷
+#### 3.2.3. 创建 Btrfs 子卷
 
 为 Btrfs 文件系统的根子卷创建一个可写快照：
 
@@ -122,7 +129,7 @@ sudo mkdir /@/.snapshots  # Create a directory for the mount point
 sudo rm -rf /@/tmp/*
 ```
 
-### 2.2.3. 编辑  fstab
+#### 3.2.4. 编辑  fstab
 
 编辑 /@/etc/fstab，设置各个子卷的挂载点信息。
 
@@ -164,7 +171,7 @@ tmpfs /tmp tmpfs defaults,noatime,mode=1777 0 0
 | 0 | 表示不需要 dump 备份工具备份此文件系统 |
 | 1 | 启动时用 fsck 检查此文件系统 (Btrfs 通常非必要) |
 
-### 2.2.4. 编辑并更新 grub 配置
+#### 3.2.4. 编辑并更新 grub 配置
 
 编辑 grub 默认配置，以便在后续启动时进行操作：
 
@@ -215,7 +222,7 @@ initrd  /@/boot/...
 
 按 F10 键开始引导系统。
 
-### 2.2.5. 确认 Btrfs 子卷已正确挂载
+#### 3.2.5. 确认 Btrfs 子卷已正确挂载
 
 进入系统后，确认目前的根目录由@子卷挂载：
 
@@ -265,7 +272,7 @@ sudo update-grub
 sudo reboot
 ```
 
-### 2.2.6. 清理迁移前的文件系统
+#### 3.2.6. 清理迁移前的文件系统
 
 首先挂载 Btrfs 根子卷，列出其文件：
 
@@ -305,7 +312,7 @@ shopt -u extglob  # Disable extended globbing
 
 到这里为止，Ubuntu 系统已经成功迁移到子卷格式下。
 
-### 2.2.7. 重新创建 swap 文件
+#### 3.2.7. 重新创建 swap 文件
 
 如有必要，可重新创建 swap 文件：
 
@@ -344,7 +351,7 @@ NAME               TYPE SIZE USED PRIO
 /swapfile/swap.img file   2G   0B   -2
 ```
 
-# 2.3. 对 Btrfs 卷中已有文件进行压缩
+### 3.3. 对 Btrfs 卷中已有文件进行压缩
 
 由于 Btrfs 是写时复制，对于已有的文件默认不会压缩，可使用如下命令，对根目录和家目录进行压缩：
 
@@ -377,11 +384,11 @@ sudo btrfs filesystem du -s /home
 **注意**：
 - 如果是在 Vmware 虚拟机中运行，动态分配的 vmdk 文件的大小，取决于客户机内 Btrfs 已分配的空间，无法自动收缩。即使执行 `sudo vmware-toolbox-cmd disk shrink /` 也无法减少 vmdk 文件的大小。
 
-# 3. 安装 Snapper 用于管理快照
+### 3.4. 安装 Snapper 用于管理快照
 
 ​Snapper​​ 是专为 ​​Btrfs​​ 和 ​​LVM​​ 文件系统设计的开源快照管理工具，由 openSUSE 团队开发，支持快照创建、对比、回滚及自动化管理。
 
-## 3.1. 安装 Snapper
+#### 3.4.1. 安装 Snapper
 
 使用 apt 安装 snapper：
 
@@ -417,7 +424,7 @@ sudo mkdir /.snapshots
 sudo mount -a  # Use settings in /etc/fstab to mount
 ```
 
-## 3.2. 查看 snapshot 列表
+#### 3.4.3. 查看 snapshot 列表
 
 运行 snapper list 查看当前 snapshot：
 
@@ -434,13 +441,13 @@ sudo sanpper list
 
 其中 #0 为当前状态，不可删除。
 
-## 3.3. 手动创建备份
+#### 3.4.4. 手动创建备份
 
 ```bash
 sudo snapper -c root create -d test1
 ```
 
-## 3.4. 手动删除备份
+#### 3.4.4. 手动删除备份
 
 删除单个备份：
 ```bash
@@ -457,7 +464,7 @@ sudo snapper delete --sync 1 2
 sudo snapper delete --sync 1-3
 ```
 
-## 3.5. 禁用开机备份
+#### 3.4.5. 禁用开机备份
 
 Snapper 每次开机会创建一个备份，可通过如下命令关闭：
 
