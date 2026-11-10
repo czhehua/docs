@@ -1,7 +1,7 @@
 # 主题：Ubuntu 使用 Btrfs 安装并配置子卷
 
 **Revision:** 2.0  
-**最后更新:** 2026/11/09
+**最后更新:** 2026/11/10
 
 - [主题：Ubuntu 使用 Btrfs 安装并配置子卷](#主题ubuntu-使用-btrfs-安装并配置子卷)
 	- [1. 需求](#1-需求)
@@ -33,6 +33,21 @@ Btrfs 是一个相对较新的文件系统，通常发音为 b-tree FS 或 butte
 
 参考 Github [ubuntu-btrfs-install](https://github.com/sirwobbythefirst/ubuntu-btrfs-install) 项目，安装后运行 `ubuntu-btrfs-install.sh` 脚本，可实现自动配置。
 
+以 Ubuntu 26.04 LTS 在 VMware 虚拟机中安装为例，主要步骤如下：
+
+1. 关机状态下，虚拟机设置的 Options - Advanced 将虚拟机设置为 UEFI 启动。
+2. 进入到 Ubuntu 26.04 安装器，选择手动分区。
+   - `/sda1` 创建一个 2GB 的 ext4 分区，挂载点为 `/boot`
+   - `/sda2` 安装器会自自动创建一个 1GB 的 FAT32 分区 ，挂载点为  `/boot/efi`
+   - `/sda3` 剩余所有磁盘空间，创建 Btrfs 分区，挂载点为 `/`
+3. 点击安装，但安装完后，先不要重启，运行如下命令：
+   - `sudo bash ./ubuntu-btrfs-install.sh sda3 sda1 sda2`
+4. 脚本运行完成后，重启进入系统。
+5. 运行 `sudo btrfs subvolume list /` 可查看各子卷。
+6. 安装 snapper 以及 btrfs-assistant：
+   - 安装工具：`sudo apt update && sudo apt install -y snapper btrfs-assistant`
+   - 为 Snapper 创建 Root 配置：`sudo snapper -c root create-config /`
+   - 打开 btrfs-assistant 程序，在 Snapper Settings 设置自动备份的份数，关闭 `Snapper boot` 后点击 `Apply systemd changes`
 
 ## 3. 安装和配置步骤（旧）  
 
@@ -55,11 +70,7 @@ Ubuntu 24.04 安装器不再使用子卷格式安装，而是将所有文件安�
 - 不使用分卷管理将：无法单独对系统文件（或用户数据）进行快照等。
 - 在下面的步骤中，会介绍如何创建以下子卷并将其挂载到对应目录。
 
-使用如下命令，查看 Btrfs 子卷的情况（未配置前为空）：
-
-```bash
-sudo Btrfs subvolume list /
-```
+使用 `sudo Btrfs subvolume list /` 命令，查看 Btrfs 子卷的情况（未配置前为空）：
 
 在下面的步骤中，将创建以下子卷，并将其挂载到对应目录：
 
